@@ -6,7 +6,7 @@ import MovieCard from "./components/MovieCard.jsx";
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 
-const API_KEY = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
 const API_OPTIONS = {
     method: "GET",
@@ -22,12 +22,14 @@ const App = () => {
     const [movieList, setMovieList] = useState([])
     const [IsLoading, setIsLoading] = useState(false)
 
-    const fetchMovies = async () => {
+    const fetchMovies = async (query = "") => {
         setIsLoading(true);
         setIsLoading('')
 
         try {
-            const endpoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+            const endpoint = query
+                ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
+                : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
 
             const response = await fetch(endpoint, API_OPTIONS);
 
@@ -53,8 +55,8 @@ const App = () => {
     }
 
     useEffect(() => {
-        fetchMovies()
-    },[])
+        fetchMovies(searchTerm)
+    },[searchTerm])
 
     return (
         <main>
