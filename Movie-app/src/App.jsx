@@ -12,7 +12,7 @@ const API_OPTIONS = {
     method: "GET",
     headers: {
         Accept: "application/json",
-        Authorization: `Bearer ${API_KEY}`,
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NzIxYWIwMDA5YWEyZjgyZTkwODNjODQwNDZiYTZiNSIsIm5iZiI6MTc1ODIzMjAxMy44ODgsInN1YiI6IjY4Y2M3ZGNkMjQwZjEwNGM5OGNmNDhkMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PdBFpUjLfuFDdrpeERDE28HKAOHiDOjhOQrvnhTlffw`,
     }
 }
 
@@ -21,6 +21,9 @@ const App = () => {
     const [errorMessage, setErrorMessage] = useState('')
     const [movieList, setMovieList] = useState([])
     const [IsLoading, setIsLoading] = useState(false)
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+
+
 
     const fetchMovies = async (query = "") => {
         setIsLoading(true);
